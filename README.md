@@ -1,17 +1,19 @@
+# Resume Mocker AI using Gemini API
 
-# AI Image Generator using Gemini API
+This web application is a fun and interactive tool that uses Google's Gemini API to humorously "roast" user-submitted resumes. Users can upload their resume as a **PDF or image file**, select a "roast intensity" level from 1 to 10, and receive a witty, sarcastic, and brutally honest critique from our AI persona.
 
-This is a web application that demonstrates the power of Google's Gemini API, specifically using the `imagen-4.0-generate-001` model to generate high-quality images from textual descriptions. The user can input a detailed prompt, and the application will render a visual representation created by the AI.
-
-The interface is designed to be clean, modern, and user-friendly, providing real-time feedback during the image generation process with loading states and clear error handling.
+The goal is to provide entertainment and a lighthearted perspective on resume writing, transforming a typically stressful document into a source of comedy.
 
 ## ✨ Features
 
--   **Text-to-Image Generation**: Converts detailed text prompts into images.
--   **High-Quality Model**: Utilizes Google's powerful `imagen-4.0-generate-001` model.
--   **Responsive UI**: A sleek and responsive interface built with Tailwind CSS that works on all screen sizes.
--   **Interactive Experience**: Features a loading spinner and user-friendly messages during image generation.
--   **Robust Error Handling**: Displays clear error messages if the API call fails.
+-   **AI-Powered Roasts**: Leverages the Gemini multimodal model to generate creative and humorous critiques of resumes.
+-   **File Upload Support**: Accepts resumes in **PDF (.pdf)** and common image formats **(.png, .jpg, .jpeg)**.
+-   **Drag & Drop Interface**: A user-friendly drop zone for easy file uploads.
+-   **Adjustable Intensity**: A slider lets the user choose a roast level from 1 (gentle teasing) to 10 (savage mockery).
+-   **Interactive Roast Report**: The output is a beautifully formatted report with collapsible sections, ratings, and emojis.
+-   **Mock Score & Label**: Generates a hilarious "Mock Score" out of 100 with a funny title (e.g., "Certified Buzzword Specialist").
+-   **Witty Persona**: The AI is instructed to be witty, sarcastic, and funny, but never cruel or genuinely disrespectful.
+-   **Responsive UI**: A sleek, dark-themed interface built with Tailwind CSS that works on all screen sizes.
 -   **Modern Tech Stack**: Built with React, TypeScript, and the official `@google/genai` SDK.
 
 ## 🛠️ Tech Stack
@@ -27,37 +29,37 @@ The project is organized into a modular structure to separate concerns and impro
 ```
 .
 ├── components/
-│   ├── Spinner.tsx       # Reusable SVG loading spinner component
-│   └── icons.tsx         # Reusable SVG icons for the UI
+│   ├── RoastResultDisplay.tsx # Renders the structured roast data in an interactive report
+│   ├── Spinner.tsx            # Reusable SVG loading spinner component
+│   └── icons.tsx              # Reusable SVG icons for the UI
 ├── services/
-│   └── geminiService.ts  # Handles all communication with the Gemini API
-├── App.tsx               # Main application component, manages state and UI
-├── index.html            # The main HTML file and entry point for the app
-├── index.tsx             # Renders the React application into the DOM
-└── metadata.json         # Application metadata
+│   └── geminiService.ts       # Handles all communication with the Gemini API
+├── App.tsx                    # Main application component, manages state and UI
+├── index.html                 # The main HTML file and entry point for the app
+├── index.tsx                  # Renders the React application into the DOM
+└── metadata.json              # Application metadata
 ```
 
 ### Code Breakdown
 
 -   **`index.html`**: The standard HTML entry point. It includes a script for Tailwind CSS and an `importmap` to manage ES module imports for React and the GenAI SDK directly from a CDN.
 
--   **`index.tsx`**: The main TypeScript file that bootstraps the React application. It finds the `root` DOM element and renders the `<App />` component into it.
+-   **`index.tsx`**: The main TypeScript file that bootstraps the React application by rendering the `<App />` component into the DOM.
 
 -   **`App.tsx`**: This is the core of the application.
-    -   It manages the application's state using `useState`, including the user's `prompt`, the `generatedImage` URL, the `isLoading` status, and any `error` messages.
-    -   It defines the UI structure, including the header, the textarea for the prompt, the "Generate" button, and the display area for the resulting image.
-    -   The `handleGenerateImage` function orchestrates the image generation process by setting loading states and calling the API service.
+    -   It manages the application's state, including the `selectedFile`, `roastLevel`, the structured `mockResult`, `isLoading` status, and any `error` messages.
+    -   The `handleRoastResume` function orchestrates the process by passing the `File` object to the API service.
+    -   It now renders the new **`<RoastResultDisplay />`** component to show the final, structured output.
 
--   **`services/geminiService.ts`**: This file abstracts the Gemini API logic away from the UI components.
-    -   The `generateImageFromPrompt` function is an `async` function that takes a `prompt` string.
-    -   It initializes the `GoogleGenAI` client with the API key from environment variables.
-    -   It calls `ai.models.generateImages` with the specified model (`imagen-4.0-generate-001`), the prompt, and configuration options like `aspectRatio` and `outputMimeType`.
-    -   It processes the response, extracts the base64-encoded image data, and returns it as a data URI (`data:image/jpeg;base64,...`) ready to be used in an `<img>` tag.
-    -   It includes error handling to catch and report issues during the API call.
+-   **`services/geminiService.ts`**: This file abstracts the Gemini API logic.
+    -   It defines the data structures (`RoastData`, `RoastSection`) for the expected API response.
+    -   The `generateResumeMock` function now requests a **structured JSON object** from the Gemini API by defining a `responseSchema`. This schema includes fields for the `mockScore`, `mockLabel`, and section-by-section critiques.
+    -   It parses the JSON response and returns the typed `RoastData` object.
 
 -   **`components/`**: This directory contains reusable React components.
-    -   **`Spinner.tsx`**: A simple, customizable SVG spinner to indicate that an operation is in progress.
-    -   **`icons.tsx`**: Contains functional SVG components (`SparklesIcon`, `ExclamationIcon`) used in buttons and alerts to improve visual communication.
+    -   **`RoastResultDisplay.tsx`**: A new component that takes the `RoastData` object and renders it as a polished, interactive report. It prominently displays the **Mock Score** and label, followed by cards for each section of the roast.
+    -   **`Spinner.tsx`**: A simple, customizable SVG spinner.
+    -   **`icons.tsx`**: Contains functional SVG components, now including a `StarIcon`.
 
 ## 🚀 Getting Started
 
@@ -74,25 +76,12 @@ You need to have an API key from Google AI Studio.
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/ai-image-generator.git
-    cd ai-image-generator
+    git clone https://github.com/your-username/resume-mocker.git
+    cd resume-mocker
     ```
 
 2.  **Set up your environment variables:**
-    This project expects the Google Gemini API key to be available as an environment variable. You will need to configure this in your deployment environment or local development setup.
-
-    For local development, you can often use a `.env` file (though this project's setup doesn't explicitly include a build tool like Vite or Create React App to process it, the code expects `process.env.API_KEY`). Ensure your local server or build tool makes this variable available to the application.
-
-    Create a file named `.env.local` in the root of your project and add your API key:
-    ```
-    API_KEY=YOUR_GOOGLE_GEMINI_API_KEY
-    ```
+    This project expects the Google Gemini API key to be available as an environment variable (`process.env.API_KEY`). You will need to configure this in your deployment environment or local development setup.
 
 3.  **Run the application:**
     Open the `index.html` file in your browser, preferably using a local server extension like "Live Server" for VS Code to avoid any potential CORS issues.
-
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/your-username/ai-image-generator/issues).
-
----

@@ -1,0 +1,5 @@
+{
+  "name": "Resume Mocker",
+  "description": "A witty, sarcastic AI that humorously roasts resumes based on a user-selected intensity level. Upload your resume and prepare for a comedic critique.",
+  "requestFramePermissions": []
+}
