@@ -1,12 +1,12 @@
-# Resume Mocker AI using Gemini API
+# Resume Mocker AI
 
-This web application is a fun and interactive tool that uses Google's Gemini API to humorously "roast" user-submitted resumes. Users can upload their resume as a **PDF or image file**, select a "roast intensity" level from 1 to 10, and receive a witty, sarcastic, and brutally honest critique from our AI persona.
+This web application is a fun and interactive tool that uses a powerful AI API to humorously "roast" user-submitted resumes. Users can upload their resume as a **PDF or image file**, select a "roast intensity" level from 1 to 10, and receive a witty, sarcastic, and brutally honest critique from our AI persona.
 
 The goal is to provide entertainment and a lighthearted perspective on resume writing, transforming a typically stressful document into a source of comedy.
 
 ## ✨ Features
 
--   **AI-Powered Roasts**: Leverages the Gemini multimodal model to generate creative and humorous critiques of resumes.
+-   **AI-Powered Roasts**: Leverages a powerful multimodal AI model to generate creative and humorous critiques of resumes.
 -   **File Upload Support**: Accepts resumes in **PDF (.pdf)** and common image formats **(.png, .jpg, .jpeg)**.
 -   **Drag & Drop Interface**: A user-friendly drop zone for easy file uploads.
 -   **Adjustable Intensity**: A slider lets the user choose a roast level from 1 (gentle teasing) to 10 (savage mockery).
@@ -14,13 +14,13 @@ The goal is to provide entertainment and a lighthearted perspective on resume wr
 -   **Mock Score & Label**: Generates a hilarious "Mock Score" out of 100 with a funny title (e.g., "Certified Buzzword Specialist").
 -   **Witty Persona**: The AI is instructed to be witty, sarcastic, and funny, but never cruel or genuinely disrespectful.
 -   **Responsive UI**: A sleek, dark-themed interface built with Tailwind CSS that works on all screen sizes.
--   **Modern Tech Stack**: Built with React, TypeScript, and the official `@google/genai` SDK.
+-   **Modern Tech Stack**: Built with React, TypeScript, and a modern AI SDK.
 
 ## 🛠️ Tech Stack
 
 -   **Frontend**: [React](https://reactjs.org/) & [TypeScript](https://www.typescriptlang.org/)
 -   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
--   **AI Model**: [Google Gemini API](https://ai.google.dev/) (`@google/genai` SDK)
+-   **AI Model**: AI Model API
 
 ## 📂 File Structure
 
@@ -33,7 +33,7 @@ The project is organized into a modular structure to separate concerns and impro
 │   ├── Spinner.tsx            # Reusable SVG loading spinner component
 │   └── icons.tsx              # Reusable SVG icons for the UI
 ├── services/
-│   └── geminiService.ts       # Handles all communication with the Gemini API
+│   └── geminiService.ts       # Handles all communication with the AI API
 ├── App.tsx                    # Main application component, manages state and UI
 ├── index.html                 # The main HTML file and entry point for the app
 ├── index.tsx                  # Renders the React application into the DOM
@@ -42,7 +42,7 @@ The project is organized into a modular structure to separate concerns and impro
 
 ### Code Breakdown
 
--   **`index.html`**: The standard HTML entry point. It includes a script for Tailwind CSS and an `importmap` to manage ES module imports for React and the GenAI SDK directly from a CDN.
+-   **`index.html`**: The standard HTML entry point. It includes a script for Tailwind CSS and an `importmap` to manage ES module imports for React and the AI SDK directly from a CDN.
 
 -   **`index.tsx`**: The main TypeScript file that bootstraps the React application by rendering the `<App />` component into the DOM.
 
@@ -51,9 +51,9 @@ The project is organized into a modular structure to separate concerns and impro
     -   The `handleRoastResume` function orchestrates the process by passing the `File` object to the API service.
     -   It now renders the new **`<RoastResultDisplay />`** component to show the final, structured output.
 
--   **`services/geminiService.ts`**: This file abstracts the Gemini API logic.
+-   **`services/geminiService.ts`**: This file abstracts the AI API logic.
     -   It defines the data structures (`RoastData`, `RoastSection`) for the expected API response.
-    -   The `generateResumeMock` function now requests a **structured JSON object** from the Gemini API by defining a `responseSchema`. This schema includes fields for the `mockScore`, `mockLabel`, and section-by-section critiques.
+    -   The `generateResumeMock` function now requests a **structured JSON object** from the AI API by defining a `responseSchema`. This schema includes fields for the `mockScore`, `mockLabel`, and section-by-section critiques.
     -   It parses the JSON response and returns the typed `RoastData` object.
 
 -   **`components/`**: This directory contains reusable React components.
@@ -67,10 +67,10 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 ### Prerequisites
 
-You need to have an API key from Google AI Studio.
+You need to have an API key from an AI service provider.
 
-1.  Visit [Google AI Studio](https://aistudio.google.com/).
-2.  Click **"Get API key"** and create a new key.
+1.  Visit the website of your chosen AI provider.
+2.  Follow their instructions to create and obtain a new API key.
 
 ### Installation & Setup
 
@@ -81,7 +81,7 @@ You need to have an API key from Google AI Studio.
     ```
 
 2.  **Set up your environment variables:**
-    This project expects the Google Gemini API key to be available as an environment variable (`process.env.API_KEY`). You will need to configure this in your deployment environment or local development setup.
+    This project expects the AI API key to be available as an environment variable (`process.env.API_KEY`). You will need to configure this in your deployment environment or local development setup.
 
 3.  **Run the application:**
     Open the `index.html` file in your browser, preferably using a local server extension like "Live Server" for VS Code to avoid any potential CORS issues.
